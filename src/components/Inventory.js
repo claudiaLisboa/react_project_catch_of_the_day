@@ -14,7 +14,7 @@ class Inventory extends React.Component{
     // take a copy of that fish and update it with the new data
     const updateFish ={
       ...fish,
-      [e.target.name]:e.target.value
+      [e.target.name]: e.target.value
     }
       this.props.updateFish(key, updateFish);
   }
@@ -40,6 +40,8 @@ class Inventory extends React.Component{
 
         <input type="text" name="image" value={fish.image} placeholder="Fish Image"
           onChange={(e)=> this.handleChange(e, key)}/>
+
+        <button onClick={()=> this.props.removeFish(key)}>Remove Fish</button>
       </div>
     )
   }

@@ -11,9 +11,11 @@ class App extends React.Component{
         super();
 
         this.addFish= this.addFish.bind(this);
+        this.removeFish= this.removeFish.bind(this);
         this.updateFish= this.updateFish.bind(this);
         this.loadSamples= this.loadSamples.bind(this);
         this.addToOrder= this.addToOrder.bind(this);
+        this.removeFromOrder= this.removeFromOrder.bind(this);
        
         //get inicial state
         this.state={
@@ -58,14 +60,21 @@ class App extends React.Component{
         fishes[`fish-${timestamp}`] = fish; //tem que usar acento grave - crase - para fazer interpolação de string 
         
         //set state
-        this.setState({fishes})
+        this.setState({fishes}); //update state
 
     }
 
     updateFish(key, updateFish){
-        const fishes = {...this.state.fishes};
+        const fishes = {...this.state.fishes}; //first take a copy the fish
         fishes[key] = updateFish;
-        this.setState({fishes});
+        this.setState({fishes});//update state
+    }
+
+    removeFish(key){
+        const fishes = {...this.state.fishes} //first take a copy the fish
+        fishes[key] = null ;
+        this.setState({fishes}); //update state
+
     }
 
     loadSamples(){
@@ -81,7 +90,12 @@ class App extends React.Component{
         order[key] = order[key] + 1 || 1;
         // update our state
         this.setState({ order });
+    }
 
+    removeFromOrder(key){
+        const order = {...this.state.order}; // take a copy of our state
+        delete order[key];
+        this.setState({ order });
     }
 
     render(){
@@ -103,9 +117,11 @@ class App extends React.Component{
                     fishes={this.state.fishes} 
                     order={this.state.order}
                     params={this.props.params}
+                    removeFromOrder={this.removeFromOrder}
                     />
                 <Inventory 
                 addFish={this.addFish} 
+                removeFish={this.removeFish}
                 loadSamples={this.loadSamples} 
                 fishes={this.state.fishes}
                 updateFish={this.updateFish}
